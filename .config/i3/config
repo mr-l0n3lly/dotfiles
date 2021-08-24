@@ -48,7 +48,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
-bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/lock.sh
+bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/i3lock-multimonitor/lock
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:

@@ -110,8 +110,8 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # Set monitors
-set $firstMonitor eDP-11
-set $secondMonitor HDMI-1
+set $firstMonitor eDP-1
+set $secondMonitor DP-1
 
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1: 1  "

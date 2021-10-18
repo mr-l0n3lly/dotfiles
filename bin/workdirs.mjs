@@ -20,7 +20,7 @@ try {
 
     const workingDir = await $`echo ${projectDir.join('\n')} | dmenu`;
 
-    await $`nvim ~/Documents/${choise}/${workingDir}`;
+    await $`code ~/Documents/${choise}/${workingDir}`;
   }
 } catch (err) {
   console.log('error', err);

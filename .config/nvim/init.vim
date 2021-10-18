@@ -108,8 +108,6 @@ call plug#begin("~/.vim/plugged")
   " Statusbar
   Plug 'itchyny/lightline.vim'
 
-
-
   " File finder
   Plug 'vifm/vifm.vim'
 
@@ -119,6 +117,12 @@ call plug#begin("~/.vim/plugged")
   " Tabs
   Plug 'ap/vim-buftabline'
 
+  " CPP
+  Plug 'deoplete-plugins/deoplete-clang'
+
+  Plug 'ludovicchabant/vim-gutentags'
+
+  Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
 call plug#end()
 
 " Enable theming support
@@ -130,7 +134,19 @@ endif
 syntax enable
 set background=dark
 colorscheme gruvbox
+nnoremap <Leader>if <Plug>(JsFileImport)
 
+nnoremap <Leader>iF <Plug>(JsFileImportList)
+
+nnoremap <Leader>ig <Plug>(JsGotoDefinition)
+
+nnoremap <Leader>iG <Plug>(JsGotoDefinition)
+
+nnoremap <Leader>ip <Plug>(PromptJsFileImport)
+
+nnoremap <Leader>is <Plug>(SortJsFileImport)
+
+nnoremap <Leader>ic <Plug>(JsFixImport)
 
 " start terminal in insert mode
 au BufEnter * if &buftype == 'terminal' | :startinsert | endif
@@ -145,28 +161,39 @@ function! OpenTerminal()
   resize 10
 endfunction
 
-nnoremap <c-n> :call OpenTerminal()<CR>
+nnoremap <c-t> :call OpenTerminal()<CR>
 
 
 " Status bar config
 set statusline+=%#warningmsg#
 
 " Fix files automatically on save
-let g:ale_fixers = {}
 let g:ale_javascript_eslint_use_global = 1
 let g:ale_linters = {
   \'javascript': ['eslint'],
+  \'typescript': ['eslint'],
 \}
 
 let g:ale_fixers = {
+  \   '*': ['remove_trailing_lines', 'trim_whitespace'],
   \'javascript': ['prettier', 'eslint'],
+  \'typescript': ['prettier', 'eslint'],
 \}
+
 
 let g:ale_linters_explicit = 1
 let g:ale_sign_column_always = 1
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
 let g:ale_fix_on_save = 1
+
+" custom setting for clangformat
+let g:neoformat_cpp_clangformat = {
+    \ 'exe': 'clang-format',
+    \ 'args': ['--style="{IndentWidth: 4}"']
+\}
+let g:neoformat_enabled_cpp = ['clangformat']
+let g:neoformat_enabled_c = ['clangformat']
 
 " Close NERDTree when closing the last buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -184,3 +211,42 @@ command! -bang -nargs=* Rg
   \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
 
+
+" Python options
+let python_highlight_all = 1
+
+function! s:set_python_settings()
+  set tabstop=8
+  set softtabstop=4
+  set shiftwidth=4
+endfunction
+
+function! s:unset_python_settings()
+  set tabstop=2
+  set softtabstop=2
+  set shiftwidth=2
+endfunction
+
+autocmd BufNewFile,BufEnter *.{py} call set_python_settings()
+autocmd BufLeave *.{py} call unset_python_settings()
+
+" cpp options
+let cpp_highlight_all = 1
+
+function! s:set_cpp_settings()
+  set tabstop=4
+  set softtabstop=4
+  set shiftwidth=4
+endfunction
+
+function! s:unset_cpp_settings()
+  set tabstop=2
+  set softtabstop=2
+  set shiftwidth=2
+endfunction
+
+autocmd BufNewFile,BufEnter *.{cpp} call set_cpp_settings()
+autocmd BufLeave *.{cpp} call unset_cpp_settings()
+
+autocmd BufNewFile,BufEnter *.{hpp} call set_cpp_settings()
+autocmd BufLeave *.{hpp} call unset_cpp_settings()

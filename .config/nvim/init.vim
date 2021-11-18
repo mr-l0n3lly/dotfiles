@@ -64,6 +64,10 @@ nmap <leader>gj :diffget //3<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gs :G<CR>
 
+
+" Buffer delete
+nmap <leader>k :bd!<CR>
+
 " Search and replace hotkey
 nnoremap H :%s//gc<left><left><left>
 
@@ -117,12 +121,6 @@ call plug#begin("~/.vim/plugged")
   " Tabs
   Plug 'ap/vim-buftabline'
 
-  " CPP
-  Plug 'deoplete-plugins/deoplete-clang'
-
-  Plug 'ludovicchabant/vim-gutentags'
-
-  Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
 call plug#end()
 
 " Enable theming support
@@ -134,6 +132,7 @@ endif
 syntax enable
 set background=dark
 colorscheme gruvbox
+
 nnoremap <Leader>if <Plug>(JsFileImport)
 
 nnoremap <Leader>iF <Plug>(JsFileImportList)
@@ -160,6 +159,17 @@ function! OpenTerminal()
   split term://zsh
   resize 10
 endfunction
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
 
 nnoremap <c-t> :call OpenTerminal()<CR>
 
@@ -210,43 +220,3 @@ command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
-
-
-" Python options
-let python_highlight_all = 1
-
-function! s:set_python_settings()
-  set tabstop=8
-  set softtabstop=4
-  set shiftwidth=4
-endfunction
-
-function! s:unset_python_settings()
-  set tabstop=2
-  set softtabstop=2
-  set shiftwidth=2
-endfunction
-
-autocmd BufNewFile,BufEnter *.{py} call set_python_settings()
-autocmd BufLeave *.{py} call unset_python_settings()
-
-" cpp options
-let cpp_highlight_all = 1
-
-function! s:set_cpp_settings()
-  set tabstop=4
-  set softtabstop=4
-  set shiftwidth=4
-endfunction
-
-function! s:unset_cpp_settings()
-  set tabstop=2
-  set softtabstop=2
-  set shiftwidth=2
-endfunction
-
-autocmd BufNewFile,BufEnter *.{cpp} call set_cpp_settings()
-autocmd BufLeave *.{cpp} call unset_cpp_settings()
-
-autocmd BufNewFile,BufEnter *.{hpp} call set_cpp_settings()
-autocmd BufLeave *.{hpp} call unset_cpp_settings()

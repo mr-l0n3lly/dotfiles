@@ -44,7 +44,7 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
-bindsym $mod+T exec zx ~/bin/workdirs.mjs
+bindsym $mod+T exec ~/bin/workdirs.mjs
 
 # kill focused window
 bindsym $mod+Shift+q kill

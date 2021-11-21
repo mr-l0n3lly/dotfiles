@@ -1,0 +1,27 @@
+#!/bin/bash
+# add sleep to prevent script execution twice (xrandr)
+sleep 0.3
+
+BG_TMP=/tmp/screen.png
+BG_SIZE=$(xrandr | grep 'current' | sed -E 's/.*current\s([0-9]+)\sx\s([0-9]+).*/\1x\2/')
+SCREENS="$(xrandr -q | grep ' connected ' | grep -o '[0-9]*x[0-9]*+[0-9]*+[0-9]*')"
+
+ICON_SIZE=$(file $1 | grep -o '[0-9]* x [0-9]*')
+ICON_WIDTH=$(echo $ICON_SIZE | cut -d' ' -f 1)
+ICON_HEIGHT=$(echo $ICON_SIZE | cut -d' ' -f 3)
+
+for SCREEN in $SCREENS
+do
+    SCREEN_WIDTH=$(echo $SCREEN | cut -d'x' -f 1)
+    SCREEN_HEIGHT=$(echo $SCREEN | cut -d'x' -f 2 | cut -d'+' -f 1)
+    SCREEN_X=$(echo $SCREEN | cut -d'x' -f 2 | cut -d'+' -f 2)
+    SCREEN_Y=$(echo $SCREEN | cut -d'x' -f 2 | cut -d'+' -f 3)
+    X=$(($SCREEN_X + $SCREEN_WIDTH/2 - $ICON_WIDTH/2))
+    Y=$(($SCREEN_Y + $SCREEN_HEIGHT/2 - $ICON_HEIGHT/2))
+    OVERLAYS=$OVERLAYS[v][1]overlay=$X:$Y[v]"; "
+done
+
+ffmpeg -f x11grab -video_size $BG_SIZE -y -i $DISPLAY -i $1 -filter_complex "[0]boxblur=8:1[v]; ${OVERLAYS::-5}" -vframes 1 $BG_TMP -loglevel quiet
+i3lock -e -n -i $BG_TMP
+rm $BG_TMP
+

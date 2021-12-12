@@ -13,7 +13,7 @@ set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:SauceCodeProSemiboldNerdFontCompleteMono 8
+font pango:"Sauce Code Pro Semibold Nerd Font Complete Mono" 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -49,7 +49,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 bindsym $mod+p exec flameshot gui
-bindsym $mod+Shift+l exec --no-startup-id ~/bin/lock $HOME/.config/i3/icon.png
+bindsym $mod+Shift+o exec --no-startup-id ~/bin/lock $HOME/.config/i3/icon.png
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -84,6 +84,7 @@ bindsym $mod+Right focus right
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -264,4 +265,3 @@ assign [class="firefox"] $ws3
 assign [class="TelegramDesktop"] $ws8
 assign [class="Spotify"] $ws9
 assign [class="Code"] $ws2
-assign [class="kitty"] $ws1

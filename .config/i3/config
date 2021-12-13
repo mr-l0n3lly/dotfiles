@@ -13,7 +13,7 @@ set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:"Sauce Code Pro Semibold Nerd Font Complete Mono" 8
+font pango:"Sauce Code Pro Semibold Nerd Font Complete" 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -128,16 +128,16 @@ set $secondMonitor DP-1
 set $thirdMonitor HDMI-1
 
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:1 term"
-set $ws2 "2:2 code"
-set $ws3 "3:3 web"
-set $ws4 "4:4 soft"
-set $ws5 "5:5 soft"
-set $ws6 "6:6 code"
-set $ws7 "7:7 social"
-set $ws8 "8:8 personal"
-set $ws9 "9:9 music"
-set $ws10 "10:10 secret"
+set $ws1 "1: "
+set $ws2 "2: "
+set $ws3 "3: "
+set $ws4 "4: "
+set $ws5 "5: "
+set $ws6 "6: "
+set $ws7 "7: "
+set $ws8 "8: "
+set $ws9 "9: "
+set $ws10 "10: "
 
 # set workspace for monitors
 workspace $ws1 output $secondMonitor $thirdMonitor $firstMonitor
@@ -253,7 +253,7 @@ smart_gaps on
 for_window [class=".*"] border pixel 2
 
 # Starting polybar (remove standart bar)
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Put desktop wallpaper
 exec --no-startup-id feh --bg-center $HOME/Wallpapers/uchihaMadara.jpg
@@ -265,3 +265,50 @@ assign [class="firefox"] $ws3
 assign [class="TelegramDesktop"] $ws8
 assign [class="Spotify"] $ws9
 assign [class="Code"] $ws2
+
+#bar {
+#  status_command i3status
+#  position top
+#  font pango:"Sauce Code Pro Semibold Nerd Font Complete" 10
+#  separator_symbol "⁞"
+#}
+
+# Nord theme colors
+set $nord0   #2E3440
+set $nord1   #3B4252
+set $nord2   #434C5E
+set $nord3   #4C566A
+set $nord4   #D8DEE9
+set $nord5   #E5E9F0
+set $nord6   #ECEFF4
+set $nord7   #8FBCBB
+set $nord8   #88C0D0
+set $nord9   #81A1C1
+set $nord10  #5E81AC
+set $nord11  #BF616A
+set $nord12  #D08770
+set $nord13  #EBCB8B
+set $nord14  #A3BE8C
+set $nord15  #B48EAD
+
+exec --no-startup-id xsetroot -solid "#3B4252"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+    status_command i3status
+    tray_output primary
+    font pango:"Sauce Code Pro Semibold Nerd Font Complete" 10
+
+    position top
+    colors {
+        background $nord0
+	    statusline $nord8
+        focused_workspace  $nord3  $nord8
+	    active_workspace   $nord3  $nord8
+	    inactive_workspace $nord8  $nord3
+	    urgent_workspace   $nord3  $nord15
+    }
+}
+
+# bindsym $mod+d exec "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#00B6FF' -sf '#EEEEEE' -fn 'monospace-10' -p 'dmenu prompt &gt;'

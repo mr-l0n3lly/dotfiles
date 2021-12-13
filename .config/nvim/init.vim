@@ -116,10 +116,13 @@ call plug#begin("~/.vim/plugged")
   Plug 'vifm/vifm.vim'
 
   " Theme
-  Plug 'morhetz/gruvbox'
+  " Plug 'morhetz/gruvbox'
 
   " Tabs
   Plug 'ap/vim-buftabline'
+
+  " Nord theme
+  Plug 'shaunsingh/nord.nvim'
 
 call plug#end()
 
@@ -131,7 +134,7 @@ endif
 " Theme
 syntax enable
 set background=dark
-colorscheme gruvbox
+colorscheme nord
 
 nnoremap <Leader>if <Plug>(JsFileImport)
 
@@ -220,4 +223,3 @@ command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
-

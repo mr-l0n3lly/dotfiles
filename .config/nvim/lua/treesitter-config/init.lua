@@ -30,17 +30,7 @@ require'nvim-treesitter.configs'.setup {
           enable = true,
           keymaps = true,
           keymaps = {
-              smart_rename = "<leader>re",
-          },
-      },
-      navigation = {
-          enable = true,
-          keymaps = {
-              goto_definition = "<leader>gd",
-              list_definitions = "<leader>gD",
-              list_definitions_toc = "<leader>gO",
-              goto_next_usage = "<A-*>",
-              goto_previous_usage = "A-#>",
+              smart_rename = "<leader>r",
           },
       },
   },

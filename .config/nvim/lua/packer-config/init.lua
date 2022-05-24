@@ -31,4 +31,13 @@ return require'packer'.startup(function(use)
         'nvim-telescope/telescope.nvim',
         requires = { {'nvim-lua/plenary.nvim'} }
     }
+    -- Null-ls for lsp formating, code-actions, diagnosis
+    use 'jose-elias-alvarez/null-ls.nvim'
+    -- Git
+    use {
+        'tanvirtin/vgit.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim'
+        }
+    }
 end)

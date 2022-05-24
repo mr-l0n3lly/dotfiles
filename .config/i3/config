@@ -119,13 +119,14 @@ bindsym $mod+a focus parent
 # start sound
 exec --no-startup-id pulseaudio -D
 
+exec --no-startup-id $HOME/.screenlayout/screenlayout-1.sh
 # focus the child container
 #bindsym $mod+d focus child
 
 # Set monitors
-set $firstMonitor eDP-1
-set $secondMonitor DP-1
-set $thirdMonitor HDMI-1
+set $firstMonitor eDP
+set $secondMonitor HDMI-A-0
+set $thirdMonitor eDP
 
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1: "
